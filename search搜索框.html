@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>搜索框</title>
+	<style>
+    *{
+    	padding: 0;
+    	margin:0;
+    }
+    ul{
+    	list-style: none;
+    }
+    #container{
+    	margin:200px auto;
+    	width: 300px;
+    }
+    #search-text{
+    	width: 298px;
+    	height: 30px;
+    	border:1px solid #000;
+    }
+    #search-result{
+    	border: 1px solid #000;
+    	border-top:0;
+    	display: none;
+
+    }
+    #search-result li{
+    	height: 30px;
+    	text-indent: 10px;
+    }
+    #search-result li:hover{
+    	background: #ccc;
+    }
+	</style>
+</head>
+<body>
+<div id="container">
+	<input type="text" id="search-text">
+		<ul id="search-result"></ul>
+</div>
+<script>
+	var arr = ["iphone","iphone4s","iphone5","samsung"];
+    var oSearchText = document.getElementById("search-text");
+    var oSearchResult = document.getElementById("search-result");
+    var aLi = null;
+    var index = -1;
+    oSearchText.onkeyup = function(e){
+    	
+		if(e.which==40||e.which==38||e.which==13){
+    		return;
+    	}else{
+         oSearchResult.innerHTML = "";
+	    	for(var i = 0; i<arr.length;i++){
+			    oSearchText.value = oSearchText.value.trim(); 
+	    		if(arr[i].indexOf(oSearchText.value)!=-1){
+	    			oSearchResult.style.display ="block";
+	    			var oLi = document.createElement("li");
+	    			oLi.innerHTML = arr[i];
+	    			oSearchResult.appendChild(oLi);
+    				var aLi = document.getElementsByTagName("li");
+    				
+    	}
+    		
+    	}
+		if(oSearchText.value==""){
+		  oSearchResult.style.display ="none";
+        }	
+	    for(var j = 0; j<aLi.length;j++){
+		    	
+	    	 aLi[j].onclick = function(){
+             oSearchText.value = this.innerHTML;
+             oSearchResult.style.display ="none";
+		    };
+	    }
+    };
+
+    
+    }
+    oSearchText.onkeydown = function(e){
+       if(e.which ==38){
+         index--;
+         if(index==-1){
+         	index=oSearchResult.children.length-1;
+         }
+         for(var i = 0;i<oSearchResult.children.length;i++){
+            oSearchResult.children[i].style.background="white";
+	        oSearchResult.children[index].style.background="pink";
+         }
+        
+
+       }
+      if(e.which==40){
+	        index++;
+	       for(var i = 0;i<oSearchResult.children.length;i++){
+	       	if(index==oSearchResult.children.length){
+	       		index = 0;
+	       	}else{
+	       		oSearchResult.children[i].style.background="white";
+	            oSearchResult.children[index].style.background="pink";
+	       	}
+	    
+          }
+         
+	 	}  
+		if(e.which==13){
+	      	oSearchText.value = oSearchResult.children[index].innerHTML;
+	      	oSearchResult.children.innerHTML="";
+	      	oSearchResult.style.display ="none";
+		 }    
+    };
+
+</script>
+	
+</body>
+</html>

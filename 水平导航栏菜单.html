@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>水平导航栏菜单</title>
+	<style>
+     *{
+     	margin: 0;
+     	padding: 0;
+     }
+     ul{
+     	list-style: none;
+     	float: left;
+     	cursor: pointer;
+     }
+     #container{
+     	border:1px solid #ccc;
+     	width: 400px;
+     	margin: 200px auto;
+     	height: 80px;
+     	text-align: center;
+     	text-indent: 50px;
+     }
+     ul li{
+     	display: none;
+     }
+     ul li:hover{
+     	background: #ccc;
+     }
+	</style>
+</head>
+<body>
+<div id="container">
+	<ul>菜单1
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+	<ul>菜单2
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+	<ul>菜单3
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+	<ul>菜单4
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+	</ul>
+</div>
+<script>
+	var oContainer = document.getElementById("container");
+	var aUl = oContainer.getElementsByTagName("ul");
+	for(var i=0;i<aUl.length;i++){
+		aUl[i].onmouseover = function(){
+		var aLi = this.getElementsByTagName("li");
+         for(var j=0;j<aLi.length;j++){
+         	aLi[j].style.display="block";
+         }
+		
+	   }; 
+	}
+	 for(var i=0;i<aUl.length;i++){
+		aUl[i].onmouseout = function(){
+		var aLi = this.getElementsByTagName("li");
+         for(var j=0;j<aLi.length;j++){
+         	aLi[j].style.display="none";
+         }
+		
+	   };
+	 } 
+	
+	
+
+
+
+</script>		
+</body>
+</html>

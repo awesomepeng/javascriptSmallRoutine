@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播图动画</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        #container{
+            width: 520px;
+            height: 280px;
+            overflow: hidden;
+            margin: 200px auto;
+            position: relative;
+        }
+        #imgs{
+            width: 2080px;
+            height: 280px;
+            position: absolute;
+            left: 0
+            top:0;
+        }
+        #imgs img{
+            height: 280px;
+            width: 520px;
+            float: left;
+
+        }
+        #ul{
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 20px;
+        }
+        #ul li{
+            height: 20px;
+            width: 20px;
+            margin-right:10px; 
+            float: left;
+            background: #000;
+            color: #fff;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+        #ul .selector{
+            background:orange;
+        }
+        #arrows{
+            width: 120px;
+            height: 20px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        #prev,#next{
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-right:5px; 
+            background: #000;
+            color: #ccc;
+            text-align: center;
+            line-height: 20px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="imgs">
+            <img src="img/1.jpg" alt="" >
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+        </div>
+        <ul id="ul">
+            <li class="selector">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <div id="arrows">
+            <span id="prev">&lt;</span>
+            <span id="next">&gt;</span>
+        </div>
+    </div>
+    <script src="animate.js"></script>
+    <script>
+        var oContainer = document.getElementById("container");
+        var oImgs = document.getElementById("imgs");
+        var aImg = oImgs.getElementsByTagName("img");
+        var oUl = document.getElementById("ul");
+        var aLi = oUl.getElementsByTagName("li");
+        var oArrows = document.getElementById("arrows");
+        var oPrev = document.getElementById("prev");
+        var oNext = document.getElementById("next");
+        var Index = 0;
+        oImgs.appendChild(aImg[0].cloneNode());
+        oImgs.style.width = aImg.length * aImg[0].offsetWidth + "px";
+        for(var i=0;i<aLi.length;i++){
+            aLi[i].index = i;
+            aLi[i].onmouseover = function(){
+                for(var j=0;j<aLi.length;j++){
+                    aLi[j].className="";
+                }
+                Index = this.index;
+                aLi[Index==(aLi.length)? 0:Index].className="selector";
+                animate(oImgs,{
+                    left:-Index*aImg[0].offsetWidth
+                });    
+            };
+
+        }
+        oPrev.onclick = oNext.onclick = function(){
+            if(this==oNext){
+                Index++;
+
+                for(var j=0;j<aLi.length;j++){
+                    aLi[j].className="";
+                } 
+                if(Index==aImg.length){
+                    Index=1;
+                     oImgs.style.left=0;
+                }
+                aLi[Index==(aLi.length)? 0:Index].className="selector";
+                animate(oImgs,{
+                    left:-Index*aImg[0].offsetWidth
+                });
+            }else{
+                Index--;
+                for(var j=0;j<aLi.length;j++){
+                    aLi[j].className="";
+                } 
+                if(Index==-1){
+                    Index=3;
+                    oImgs.style.left=-4 * aImg[0].offsetWidth +"px";
+                }
+                aLi[Index==(aLi.length)? 0:Index].className="selector";
+                animate(oImgs,{
+                    left:-Index*aImg[0].offsetWidth
+                });
+            }
+        };
+        var timer = setInterval(function(){
+                oNext.onclick();
+        },1000);
+        oContainer.onmouseover = function(){
+                clearInterval(timer);
+        };
+        oContainer.onmouseout = function(){
+            clearInterval(timer);
+            timer = setInterval(function(){
+                oNext.onclick();
+            },1000);
+        };
+    </script>

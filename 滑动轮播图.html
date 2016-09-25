@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>滑动轮播图</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#container{
+			width: 520px;
+			height:280px;
+			position: relative;
+			margin: 200px auto;
+			overflow: hidden;
+		}
+		#container img{
+			width: 520px;
+			height: 280px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+			<img src="img/1.jpg" alt="" style="z-index:4">
+			<img src="img/2.jpg" alt="" style="z-index:3">
+			<img src="img/3.jpg" alt="" style="z-index:2">
+			<img src="img/4.jpg" alt="" style="z-index:1">
+	</div>
+	
+</body>
+<script src="animate.js"></script>
+<script>
+	var oContainer = document.getElementById("container");
+	var aImgs = oContainer.getElementsByTagName("img");
+	oContainer.onclick = function(e){
+		var target = e.target || window.event.scrElement;
+		var date = {opacity:0};
+		var random = Math.ceil(Math.random()*4);
+		if(target!=oContainer){
+			switch(random){
+				case 1: date.top = -aImgs[0].offsetHeight;break;
+				case 2: date.left = -aImgs[0].offsetWidth;break;
+				case 3: date.top = aImgs[0].offsetHeight;break;
+				case 4: date.left = aImgs[0].offsetWidth;break;
+			}
+			animate(target,date,function(){
+				target.style.left=0;
+				target.style.top=0;
+				for(var i=0;i<aImgs.length;i++){
+					aImgs[i].style.zIndex++;
+					aImgs[i].style.opacity= 1;
+					aImgs[i].style.filter= "alpha(opacity=100)";
+				}
+				target.style.zIndex=1;
+
+			});
+
+		}
+	};
+</script>
+</html>

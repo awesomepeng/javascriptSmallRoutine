@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>照片墙</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		html,body{
+			width: 100%;
+			height: 100%;
+		}
+
+		#container{
+			width: 100%;
+			height: 100%;
+			background: url(imgs/bg.jpg);
+		}
+		img{
+			width: 125px;
+			height: 125px;
+			border:5px solid #fff;
+			position: absolute;
+		}
+	</style>
+</head>
+<body>
+	<div id="container"></div>
+	<script src="animate.js"></script>
+	<script>
+		var iRow = 6,iCol = 4;
+		var count = 0;
+		var array = [];
+		var index = 0;
+		var iImg_width = 135;
+		var iImg_height =135;
+		var zIndex = 0;
+		var oContainer = document.getElementById("container");
+		for(var i=0;i<iRow*iCol;i++){
+			count++;
+			var oImg = new Image();
+			if(count==iRow*iCol){
+				oImg.onload = function(){
+					loadSuccess();
+				};
+			}
+			oImg.src="imgs/"+(i+1)+".jpg";
+			array.push(oImg);
+			
+		}
+		function loadSuccess(){
+			var iRowGap = (oContainer.offsetWidth-iRow*iImg_width)/(iRow+1);
+			var iColGap = (oContainer.offsetHeight-iCol*iImg_height)/(iCol+1);
+			for(var i=0;i<iRow;i++){
+				for(var j=0;j<iCol;j++){
+					array[index].style.left=i*(iImg_width+iRowGap)+iRowGap+"px";
+					array[index].style.top=j*(iImg_height+iColGap)+iColGap+"px";
+					oContainer.appendChild(array[index]);
+					index++;
+				}
+			}
+			oContainer.onmouseover = function(e){
+				var target = e.target||window.event.srcElement;
+				if(e.target!=oContainer){
+					target.style.zIndex=++zIndex;
+					animate(target,{
+						width:200,
+						height:200,
+						marginTop:-30,
+						marginLeft:-30
+
+					});
+				}
+			};
+			oContainer.onmouseout = function(e){
+				var target = e.target||window.event.srcElement;
+				if(e.target!=oContainer){
+					animate(target,{
+						width:iImg_width,
+						height:iImg_height,
+						marginTop:0,
+						marginLeft:0
+
+					});
+				}
+			};
+		}
+
+	</script>
+</body>
+</html>

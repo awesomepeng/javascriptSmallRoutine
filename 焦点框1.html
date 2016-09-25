@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>焦点框兼容版</title>
+	<style>
+	   *{
+	   	 padding: 0;
+	   	 margin: 0;
+
+        }
+        #ip{
+        	width: 400px;
+        	height: 30px;
+        	display: block;
+        	background: #ccc;
+        	color: gray;
+        	margin: 500px auto;
+        	text-indent: 10px;
+
+        }
+
+
+	</style>
+</head>
+<body>
+	<input type="text" value="请输入关键字" id="ip">
+	<script>
+	 var oIp =document.getElementById("ip");
+	 oIp.onfocus=function(){
+	 	oIp.value="";
+	 	oIp.style.color="#000";
+	 }; 
+	 oIp.onblur=function(){
+	 	if(oIp.value==""){
+	 		oIp.value="请输入关键字";
+	 		oIp.style.color="gray";
+	 	}
+	 }
+
+
+
+	</script>
+</body>
+</html>

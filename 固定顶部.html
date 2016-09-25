@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>固定顶部</title>
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	body{
+		height: 2000px;
+	}
+	#header{
+		width:100%;
+		height: 50px;
+		background: #ccc;
+	}
+	#search{
+		width: 100%;
+		height: 30px;
+		background: #0f0;
+	}
+
+	</style>
+</head>
+<body>
+<div id="header"></div>
+<div id="search"></div>
+<script>
+	var oHeader = document.getElementById("header");
+	var oSearch = document.getElementById("search");
+	var iHeaderWidth = oSearch.offsetTop;
+	var bIsFixed=false;
+	
+	window.onscroll = function(){
+	var iScrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+      if(iHeaderWidth<=iScrollTop&&!bIsFixed){
+      	oSearch.style.position="fixed";
+      	oSearch.style.top=0;
+      	oSearch.style.left=0;
+      	bIsFixed=true;
+      }
+      else if (iHeaderWidth>iScrollTop&&bIsFixed){
+		oSearch.style.position="static";
+		bIsFixed=false;
+	  }
+	};
+
+
+
+
+</script>
+	
+</body>
+</html>

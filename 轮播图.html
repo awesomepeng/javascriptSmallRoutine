@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图</title>
+	<style>
+    *{
+    	margin: 0;
+    	padding: 0;
+    }
+    #ul{
+    	list-style: none;
+    	position: absolute;
+    	right: 10px;
+    	bottom: 10px;
+
+    }
+    #ul li{
+    	float: left;
+    	width: 20px;
+    	height: 20px;
+    	background: #000;
+    	color: #fff;
+    	margin-right:5px; 
+    	line-height: 20px;
+    	text-align: center;
+    	cursor: pointer;
+
+    }
+    #ul .selector{
+    	background: orange;
+    }
+    #container{
+    	width: 520px;
+    	height: 280px;
+    	margin: 200px auto;
+    	position: relative;
+    }
+    #img{
+    	width: 520px;
+    	height: 280px;
+    	position: relative;
+    }
+    #img img{
+    	display: none;
+    }
+    #img .selector{
+    	display: block;
+    }
+    #arrows{
+    	
+    	width: 60px;
+    	height: 20px;
+    	position: absolute;
+    	left: 10px;
+    	bottom: 10px;
+    	
+    }
+    #arrows span{
+    	background: #000;
+    	color: #ccc;
+    	display: inline-block;
+    	margin-right:2px;
+    	width: 20px;
+    	height: 20px;
+    	line-height: 20px;
+    	text-align: center;
+    	cursor: pointer;
+    }
+	</style>
+</head>
+<body>
+<div id="container">
+	<div id="img">
+		<img src="img/1.jpg" alt="" class="selector">
+		<img src="img/2.jpg" alt="">
+		<img src="img/3.jpg" alt="">
+		<img src="img/4.jpg" alt="">
+	</div>
+	<ul id="ul">
+			<li class="selector">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+	</ul>
+	<div id="arrows">
+		<span id="prev">&lt;</span>
+		<span id="next">&gt;</span>
+	</div>	
+</div>
+<script>
+	var oContainer = document.getElementById("container");
+	var oImg = document.getElementById("img");
+	var aImg = oImg.getElementsByTagName("img");
+	var oUl = document.getElementById("ul");
+	var aLi = oUl.getElementsByTagName("li");
+	var oPrev = document.getElementById("prev");
+	var oNext = document.getElementById("next");
+	var Index=0;
+	  for(var i=0;i<aLi.length;i++){
+	  	  aLi[i].index=i;
+	  	aLi[i].onclick = function(){
+	      for(j=0;j<aLi.length;j++){
+	      	aLi[j].style.background ="#000";
+	      	aImg[j].style.display="none";
+	      }
+	      Index = this.index;
+	      this.style.background="orange";
+	      aImg[Index].style.display="block";
+	       
+	     
+       };
+       oNext.onclick = function(){
+       	 Index++;
+        for(var i=0;i<aImg.length;i++){
+        	aImg[i].style.display="none";
+        	aLi[i].style.background ="#000";
+        }
+        if(Index==aImg.length){
+        	Index=0;
+        }
+		aImg[Index].style.display="block";
+        aLi[Index].style.background="orange";
+       };
+
+		oPrev.onclick = function(){
+			Index--;
+		   	for(var i=0;i<aImg.length;i++){
+		    	aImg[i].style.display="none";
+		    	aLi[i].style.background ="#000";
+		    }
+		    if(Index==-1){
+		    	Index=3;
+		    }
+		    aImg[Index].style.display="block";
+		    aLi[Index].style.background="orange";
+		};
+	  }	
+        var timer=setInterval(function(){
+        	oNext.onclick();
+        },1000);
+        oContainer.onmouseover=function(){
+        	clearInterval(timer);
+        };
+        oContainer.onmouseout=function(){
+        timer=setInterval(function(){
+        	oNext.onclick();
+        },1000);
+        };
+
+
+
+
+
+
+</script>
+	
+</body>
+</html>

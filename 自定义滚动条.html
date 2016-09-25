@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>自定义滚动条</title>
+	<style>
+		#container{
+			width: 400px;
+			height: 500px;
+			background: #ccc;
+			position: relative;
+			/*overflow: scroll;*/
+			overflow: hidden;
+		}
+		#content{
+			width: 350px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		#roll{
+			width: 50px;
+			height: 500px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			background: pink;
+		}
+		#bar{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background:orange;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="content">
+			开始一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字v一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字vv一些文字一些文字v一些文字一些文字一些文字v一些文字一些文字一些文字v一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字一些文字v结束
+		</div>
+		<div id="roll">
+			<div id="bar"></div>
+		</div>
+	</div>
+	<script>
+		var oContainer = document.getElementById("container");
+		var oContent = document.getElementById("content");
+		var oRoll = document.getElementById("roll");
+		var oBar = document.getElementById("bar");
+		oBar.onmousedown = function(e){
+			e=e||window.event;
+			iDisY = e.clientY-oBar.offsetTop;
+			document.onmousemove = function(e){
+				e=e||event;
+				var iTop = e.clientY-iDisY-oContainer.offsetTop;
+				var iScale = iTop/(oContainer.offsetHeight-oBar.offsetHeight);
+				oBar.style.top = iTop +"px";
+				if(oBar.offsetTop<0){
+					oBar.style.top=0;
+				}
+				if(oBar.offsetTop>=oContainer.offsetHeight-oBar.offsetHeight){
+					oBar.style.top=oContainer.offsetHeight-oBar.offsetHeight+"px";
+				}
+				oContent.style.top=-(oContent.offsetHeight-oContainer.offsetHeight)*iScale +"px";
+				return false;
+			}; 
+		};
+		document.onmouseup = function(){
+			document.onmousemove = null;
+		};
+	</script>
+	
+</body>
+</html>

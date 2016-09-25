@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>放大镜</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#container{
+			position: relative;
+		}
+		#small-img{
+			width: 400px;
+			height: 400px;
+			position: relative;
+			margin:50px 50px 0 0; 
+		}
+		#small{
+			width: 400px;
+			height: 400px;
+		}
+		#drag{
+			width: 100px;
+			height: 100px;
+			background: #eee;
+			opacity: 0.7;
+			filter: alpha(opacity=70);
+			z-index: 1;
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: none;
+		}
+		#big-img{
+			position: relative;
+			left: 500px;
+			top: -450px;
+			width: 400px;
+			height: 400px;
+			margin-top: 50px ;
+			overflow: hidden;
+			display: none;
+			border:1px solid #000;
+			
+		}
+		#big{
+			width: 800px;
+			height: 800px;
+			position: absolute;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="small-img">
+			<img src="magnifying glass img/small.jpg" alt="" id="small">
+			<div id="drag"></div>
+		</div>
+		<div id="big-img">
+			<img src="magnifying glass img/big.jpg" alt="" id="big">
+		</div>
+	</div>
+	<script>
+		var oSmallImg = document.getElementById("small-img");
+		var oSmall = document.getElementById("small");
+		var oDrag = document.getElementById("drag");
+		var oBigImg = document.getElementById("big-img");
+		var oBig = document.getElementById("big");
+		oSmallImg.onmouseover = function(){
+			oDrag.style.display="block";
+			oBigImg.style.display="block";
+		};
+		oSmallImg.onmouseout = function(){
+			oDrag.style.display="none";
+			oBigImg.style.display="none";
+		};
+		oSmallImg.onmousemove = function(e){
+			var iDisX = e.clientX-oDrag.offsetWidth/2;
+			var iDisY = e.clientY-oDrag.offsetHeight/2 -50;
+			oDrag.style.left= iDisX + "px";
+			oDrag.style.top = iDisY + "px";
+			if(oDrag.offsetLeft>=(oSmall.offsetWidth-oDrag.offsetWidth)){
+				oDrag.style.left = oSmall.offsetWidth-oDrag.offsetWidth+ "px";
+			}
+			if(oDrag.offsetLeft<=0){
+				oDrag.style.left =0;
+			}
+			if(oDrag.offsetTop<=0){
+				oDrag.style.top = 0;
+			}
+			if(oDrag.offsetTop>=oSmall.offsetHeight-oDrag.offsetHeight){
+				oDrag.style.top = oSmall.offsetHeight-oDrag.offsetHeight + "px";
+			}
+			var iRatiox = iDisX/(oSmall.offsetWidth-oDrag.offsetWidth);
+			var iRatioy = iDisY/(oSmall.offsetHeight-oDrag.offsetHeight);
+			oBig.style.left = - iRatiox*(oBig.offsetWidth-400) + "px";
+			oBig.style.top = - iRatioy*(oBig.offsetHeight-400) + "px";
+		};
+
+
+	</script>	
+</body>
+</html>

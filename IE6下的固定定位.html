@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>IE6下的固定定位</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			height: 2000px;
+		}
+		#container{
+			width: 200px;
+			height: 400px;
+			background: #ccc;
+			position: relative;
+			top: 200px;
+		}
+		#tip{
+			width: 60px;
+			height: 400px;
+			background: #f00;
+			text-align: center;
+			line-height: 400px;
+			position: absolute;
+			left: 200px;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="tip">联系我</div>
+	</div>
+	<script>
+		var oContainer = document.getElementById("container");
+		oContainer.style.left = -oContainer.offsetWidth+"px";
+		var timer;
+		var iScrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+		window.onscroll= function(){
+			var iScrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+			oContainer.style.top= iScrollTop+200+"px";
+		};
+		oContainer.onmouseover = function(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(oContainer.offsetLeft>=0){
+					clearInterval(timer);
+				}
+				else{
+					oContainer.style.left = oContainer.offsetLeft+10+"px";
+				}
+				
+			},20);
+		};
+		oContainer.onmouseout = function(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				if(oContainer.offsetLeft<-oContainer.offsetWidth){
+					clearInterval(timer);
+				}
+				else{
+					oContainer.style.left = oContainer.offsetLeft-10+"px";
+				}
+				
+			},20);
+		};
+	</script>
+</body>
+</html>

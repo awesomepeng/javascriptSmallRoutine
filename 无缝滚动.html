@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝滚动</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		#container{
+			width: 390px;
+			height: 240px;
+			margin: 200px auto;
+			text-align: center;
+			line-height: 240px;
+			background: #ccc;
+			position: relative;
+			overflow: hidden;
+		}
+		#ul{
+			width: 520px;
+			height: 100px;
+			position: absolute;
+		}
+		#ul li{
+			width: 120px;
+			height: 100px;
+			margin-right:10px;
+			text-align: center;
+			line-height: 100px;
+			float: left; 
+			background: #000;
+			color: #fff;
+		}
+		#arrows{
+			position: absolute;
+			top:80px;
+			width: 180px;
+			height: 30px;
+			margin-top:50px;
+			margin-left:135px;  
+
+
+		}
+		#prev,#next{
+			width: 50px;
+			height: 30px;
+			background: gray;
+			color: #000;
+			text-align: center;
+			line-height: 30px;
+			float: left;
+			margin-right:30px; 
+			display: block;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<ul id="ul">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<div id="arrows">
+			<span id="prev">向前</span>
+			<span id="next">向后</span>
+		</div>
+	</div>
+	<script>
+		var oUl = document.getElementById("ul");
+		var oPrev = document.getElementById("prev");
+		var oNext = document.getElementById("next");
+		var speed = 10;
+		oUl.innerHTML+=oUl.innerHTML;
+		oUl.style.width = oUl.offsetWidth*2 +"px";
+		setInterval(function(){
+			oUl.style.left = oUl.offsetLeft - speed +"px";
+			if(oUl.offsetLeft<=-(oUl.offsetWidth/2)){
+				oUl.style.left=0;
+			}
+			if(oUl.offsetLeft>0){
+				oUl.style.left=(-oUl.offsetWidth)/2+"px";
+			}
+
+		},30);
+		oPrev.onmouseover = oNext.onmouseover=function(){
+			if(this==oPrev){
+				speed = 10;
+			}
+			else{
+				speed = -10;
+			}	
+		};
+	</script>	
+</body>
+</html>

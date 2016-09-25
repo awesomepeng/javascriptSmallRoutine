@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图动画</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		#container{
+			width: 520px;
+			height: 280px;
+			overflow: hidden;
+			margin: 200px auto;
+			position: relative;
+		}
+		#imgs{
+			width: 2080px;
+			height: 280px;
+			position: absolute;
+			left: 0
+			top:0;
+		}
+		#imgs img{
+			height: 280px;
+			width: 520px;
+			float: left;
+
+		}
+		#ul{
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			height: 20px;
+		}
+		#ul li{
+			height: 20px;
+			width: 20px;
+			margin-right:10px; 
+			float: left;
+			background: #000;
+			color: #fff;
+			text-align: center;
+			line-height: 20px;
+			cursor: pointer;
+		}
+		#ul .selector{
+			background:orange;
+		}
+		#arrows{
+			width: 120px;
+			height: 20px;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+
+		#prev,#next{
+			float: left;
+			width: 20px;
+			height: 20px;
+			margin-right:5px; 
+			background: #000;
+			color: #ccc;
+			text-align: center;
+			line-height: 20px;
+			cursor: pointer;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="imgs">
+			<img src="img/1.jpg" alt="" >
+			<img src="img/2.jpg" alt="">
+			<img src="img/3.jpg" alt="">
+			<img src="img/4.jpg" alt="">
+		</div>
+		<ul id="ul">
+			<li class="selector">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+		</ul>
+		<div id="arrows">
+			<span id="prev">&lt;</span>
+			<span id="next">&gt;</span>
+		</div>
+	</div>
+	<script>
+		var oContainer = document.getElementById("container");
+		var oImgs = document.getElementById("imgs");
+		var aImg = oImgs.getElementsByTagName("img");
+		var oUl = document.getElementById("ul");
+		var aLi = oUl.getElementsByTagName("li");
+		var oArrows = document.getElementById("arrows");
+		var oPrev = document.getElementById("prev");
+		var oNext = document.getElementById("next");
+		var NowIndex=0;
+		var PrevIndex=0;
+		var timer = null;
+		var timer1 = null;
+		var LastoffsetLeft=0;
+		var bool = true;
+		for(var i=0;i<aLi.length;i++){
+			aLi[i].index=i;
+			aLi[i].onclick = function(){
+				
+				NowIndex=this.index;
+				changeImg(NowIndex);
+				PrevIndex=NowIndex;
+			};
+			oPrev.onclick=oNext.onclick = function(){
+				
+				if(this==oNext){
+					NowIndex++;
+					if(NowIndex==aLi.length){
+						NowIndex=0;
+					}
+					changeImg(NowIndex);
+					PrevIndex=NowIndex;
+				}else{
+					NowIndex--;
+					if(NowIndex<0){
+						NowIndex=aLi.length-1;
+					}
+					changeImg(NowIndex);
+					PrevIndex=NowIndex;
+				}
+			};
+
+		}
+		timer1=setInterval(function(){
+			oNext.onclick();
+		},1000);
+		
+		oContainer.onmouseover=function(){
+			clearInterval(timer1);
+		};
+		oContainer.onmouseout=function(){
+			timer1=setInterval(function(){
+				oNext.onclick();
+			},1000);
+		};
+		
+		function changeImg(nowindex){
+				if(!bool){
+					return ;
+				}
+				bool = false;
+				for(var j=0;j<aLi.length;j++){
+					aLi[j].style.background="#000";
+				}
+				aLi[nowindex].style.background="orange";
+					// clearInterval(timer);
+					var speed = 0;
+					var num = 0;
+					if(oImgs.offsetLeft>=(-(nowindex)*aImg[0].offsetWidth)){
+						num = oImgs.offsetLeft-(-(nowindex)*aImg[0].offsetWidth);
+							speed = -num/8;
+
+					}else if(oImgs.offsetLeft<=(-(nowindex)*aImg[0].offsetWidth)){
+						num = oImgs.offsetLeft-(-(nowindex)*aImg[0].offsetWidth);
+						speed = -num/8;
+					}
+					timer=setInterval(function(){
+						
+					oImgs.style.left = (oImgs.offsetLeft + speed )+ "px";
+						if(oImgs.offsetLeft==(-(nowindex)*aImg[0].offsetWidth)){
+							bool = true;
+							clearInterval(timer);
+						}	
+					},50);
+				
+			
+		}
+	</script>
+	
+</body>
+</html>

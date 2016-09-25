@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<style>
+     *{
+     	margin: 0;
+     	padding: 0;
+     }
+     #tab{
+     	list-style: none;
+     	height: 30px;
+     	border-bottom: 1px solid #000;
+     }
+     #tab li{
+     	float: left;
+     	width: 120px;
+     	height: 30px;
+     	margin-right: 10px;
+     	background: gray;
+     	text-align: center;
+     	line-height: 30px;
+     	cursor: pointer;
+     }
+     #content{
+     	clear: both;
+     }
+     #container{
+     	width: 400px;
+     	height: 300px;
+     	background: #ccc;
+     	margin: 200px auto;
+     	border:1px solid #000;
+     	overflow: hidden;
+     }
+     #tab .selector{
+     	background:#000;
+     	color:#fff;
+     }
+     #container div{
+     	width: 400px;
+     	height: 270px;
+     }
+	</style>
+</head>
+<body>
+<div id="container">
+	<ul id="tab">
+		<li class="selector">html</li>
+		<li>css</li>
+		<li>javascript</li>
+	</ul>
+	<div id="content">
+		<div>111</div>
+	    <div>222</div>
+	    <div>333</div>
+	</div>
+	
+</div>
+<script>
+	var oUl = document.getElementById("tab");
+	var aLi = oUl.getElementsByTagName("li");
+	var oContent = document.getElementById("content");
+	var aDiv= oContent.getElementsByTagName("div");
+	for(var i = 0;i<aLi.length;i++){
+		aLi[i].index = i;
+		aLi[i].onclick = function(){
+			for(var j = 0;j<aLi.length;j++){
+				 aLi[j].style.background="gray";
+                 aLi[j].style.color="black";
+                 aDiv[j].style.display= "none";
+			}
+            this.style.background="black";
+            this.style.color="white";
+            aDiv[this.index].style.display="block";
+           
+		};
+	}
+
+
+
+</script>
+
+	
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>右键菜单</title>
+	<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		height:2000px;
+	}
+	#menu{
+		width: 180px;
+		height: 180px;
+		border:1px solid #000;
+		display:none;
+	}
+	#menu li{
+		width: 180px;
+		height: 55px;
+		text-align: center;
+		border-bottom: 1px dashed blue;
+		line-height: 55px;
+		list-style: none;
+	}
+	#menu li:hover{
+		background: #ccc;
+	}
+	</style>
+
+</head>
+<body>
+<ul id="menu">
+	<li>menu1</li>
+	<li>menu2</li>
+	<li>menu3</li>
+</ul>	
+<script>
+	var oMenu = document.getElementById("menu");
+	document.body.oncontextmenu = function(e){
+        e = e||event;
+        oMenu.style.display = "block";
+        oMenu.style.position='absolute';
+        oMenu.style.left = e.clientX +"px";
+        oMenu.style.top = e.clientY +"px";
+        return false;
+
+	};
+	document.body.onclick = function(){
+         oMenu.style.display = "none";
+	};
+
+
+
+</script>
+	
+</body>
+</html>

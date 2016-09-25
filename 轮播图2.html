@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>轮播图2</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#ul{
+			list-style: none;
+			height: 20px;
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+		}
+		#ul li{
+			float:left;
+			width: 20px;
+			height: 20px;
+			background: #000;
+			color: #fff;
+			margin-right:5px;
+			text-align: center;
+			cursor: pointer;
+			line-height: 20px; 
+		}
+		#container{
+			width: 520px;
+			height: 280px;
+			margin: 200px auto;
+			position: relative;
+		}
+		#mask{
+			width: 520px;
+			height: 280px;
+			background: #ccc;
+			opacity:0.8;
+			filter: alpha(opacity=80);
+			position: absolute;
+			top: 0;
+			left: 0;
+			text-align: center;
+			line-height: 280px;
+			z-index: 1;
+		}
+		#img{
+			width: 520px;
+			height: 280px;
+			overflow: hidden;
+
+		}
+		#arrows{
+         	height: 20px;
+         	position: absolute;
+         	left: 10px;
+         	bottom: 10px;
+		}
+		#prev{
+			background: #000;
+			color: #ccc;
+			margin-right:2px;
+			float: left;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			cursor: pointer; 
+		}
+		#next{
+			background: #000;
+			color: #ccc;
+			float: left;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			cursor: pointer; 
+		}
+
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<div id="mask">加载中...</div>
+		<div id="img"></div>
+		<ul id="ul"></ul>
+		<div id="arrows">
+			<span id="prev">&lt;</span>
+			<span id="next">&gt;</span>
+		</div>
+	</div>
+<script>
+	var oContainer = document.getElementById("container");
+	var oMask = document.getElementById("mask");
+	var oUl= document.getElementById("ul");
+	var aImg = document.getElementById("img");
+	var oPrev = document.getElementById("prev");
+	var oNext = document.getElementById("next");
+	var iImgNum = 4;
+	var count = 0;
+	
+	for(var i=0;i<iImgNum;i++){
+		var oImg = new Image();
+		oImg.onload=function(){
+	         count++;
+			if(count==iImgNum){
+				loadSuccess();
+				var timer=setInterval(function(){
+				oNext.onclick();
+                },1000);
+	            oContainer.onmouseover=function(){
+					clearInterval(timer);
+	            };
+	            oContainer.onmouseout=function(){
+					timer=setInterval(function(){
+						oNext.onclick();
+					},1000);
+	            };
+			}   		
+		};
+	    oImg.src="img/"+(i+1)+".jpg";
+		aImg.appendChild(oImg); 
+	    var oLi = document.createElement("li");
+		oLi.innerHTML=(i+1);
+		oUl.appendChild(oLi);
+		}
+	function loadSuccess(){
+		    var Index = 0;
+			oContainer.removeChild(oMask);
+		    for(var k=0;k<iImgNum;k++){
+			    	var oLi = document.getElementsByTagName("li");
+			    	var oImg = document.getElementsByTagName("img");
+					oLi[k].index=k;
+					oLi[0].style.background="orange";
+					oLi[k].onclick = function(){
+						for(j=0;j<oImg.length;j++){
+							oLi[j].style.background ="#000";
+							oImg[j].style.display="none";
+						}
+						Index = this.index;
+						this.style.background="orange";
+						oImg[Index].style.display="block";
+			       };
+			       oNext.onclick = function(){
+				       	Index++;
+				        for(var i=0;i<oImg.length;i++){
+				        	oImg[i].style.display="none";
+				        	oLi[i].style.background ="#000";
+				        }
+				        if(Index==oImg.length){
+				        	Index=0;
+				        }
+						oImg[Index].style.display="block";
+				        oLi[Index].style.background="orange";
+				   };
+
+				oPrev.onclick = function(){
+					Index--;
+				   	for(var i=0;i<oImg.length;i++){
+				    	oImg[i].style.display="none";
+				    	oLi[i].style.background ="#000";
+				    }
+				    if(Index==-1){
+				    	Index=(oImg.length-1);
+				    }
+				    oImg[Index].style.display="block";
+				    oLi[Index].style.background="orange";
+				};
+			}	
+        
+	}	
+</script>	
+</body>
+</html>       
+	
+		
+		
+
+	
+		
+	   
+	
+	
+	
+    
+    
+
+       
+	

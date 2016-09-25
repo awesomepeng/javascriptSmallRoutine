@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>折叠菜单</title>
+	<style>
+     *{
+     	margin: 0;
+     	padding: 0;
+     }
+     #container{
+        width: 200px;
+        height:300px;
+     	margin: 200px auto;
+     	
+     }
+     .menu{
+     	width: 200px;
+     	height: 40px;
+     	text-indent: 55px;
+     	border:1px dashed #0f0;
+     	cursor: pointer;
+     }
+     .tab{
+     	list-style: none;
+     	width: 200px;
+     	height: 100px;
+     	border:1px solid #000;
+     	display: none;
+     }
+     .tab li{
+     	margin-bottom:10px; 
+     	text-align: center;
+     }
+     .tab li:hover{
+     	background: #ccc;
+     }
+
+	</style>
+</head>
+<body>
+<div id="container">
+    <h2 class="menu">主菜单1</h2>
+	<ul class="tab">
+		<li>菜单1</li>
+		<li>菜单2</li>
+		<li>菜单3</li>
+	</ul>
+	<h2 class="menu">主菜单2</h2>
+	<ul class="tab">
+		<li>菜单1</li>
+		<li>菜单2</li>
+		<li>菜单3</li>
+	</ul>
+</div>
+<script>
+	var oContainer = document.getElementById("container");
+	var oMenu = oContainer.getElementsByTagName("h2");
+	for(var i = 0; i<oMenu.length;i++){
+		oMenu[i].onclick = function(){
+		  next(this).style.display=next(this).style.display=="block" ? "none":"block";
+		  return false;
+		};
+	}
+	function next(ele){
+      do{
+      	 var ele = ele.nextSibling;
+      	}while(ele&&ele.nodeType!=1)
+      return ele;	
+	}
+</script>
+	
+</body>
+</html>
